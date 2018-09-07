@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import ReactStars from "react-stars";
 import axios from "axios";
 import qs from "qs";
+
 import Header from "./Header";
 import PictureInput from "./PictureInput";
 
@@ -134,6 +136,23 @@ class ShowCat extends Component {
     this.setState({ changePicture: false });
   };
 
+  onRatingSubmit = e => {
+    console.log(e.target.value);
+    if (
+      window.confirm(
+        `Are you sure you want to leave a ${e.target.value} star rating?`
+      )
+    ) {
+      axios
+        .post(
+          "/api/ratings/",
+          qs.stringify({ catId: this.state.cat.id, value: e.target.value })
+        )
+        .then(alert("Thanks for leaving a rating!"))
+        .then(() => this.props.history.push(`/cats/${this.state.cat.id}`));
+    }
+  };
+
   showCat = () => {
     if (this.state.cat === null) {
       return <h1>Cat not Found</h1>;
@@ -150,6 +169,24 @@ class ShowCat extends Component {
         />
         <br />
         <p>{this.state.cat.description}</p>
+        <div className="rating">
+          <span>Average Rating:</span>
+          <ReactStars
+            value={this.state.cat.averageRating}
+            edit={false}
+            size={26}
+            className="cat-list-rating"
+          />
+        </div>
+        <span>My rating: </span>
+        <select id="my-rating" onChange={this.onRatingSubmit}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <br />
         <button onClick={() => this.setState({ edit: true })}>
           Edit Details
         </button>

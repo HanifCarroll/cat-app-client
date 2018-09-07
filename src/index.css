@@ -4,6 +4,15 @@
 }
 
 .cat-list-img {
-  max-height: 100px;
-  max-width: 100px;
+  max-height: 75px;
+  max-width: 75px;
+}
+
+.cat {
+  display: flex;
+  align-items: center;
+}
+
+.rating {
+  display: flex;
 }

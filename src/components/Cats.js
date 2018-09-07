@@ -21,6 +21,7 @@ class Cats extends Component {
         name={cat.name}
         description={cat.description}
         pictureURL={cat.pictureURL}
+        rating={cat.averageRating}
         id={cat.id}
         key={cat.id}
       />
